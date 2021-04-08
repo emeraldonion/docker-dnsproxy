@@ -9,7 +9,14 @@ A Docker image for [dnsproxy](https://github.com/adguardteam/dnsproxy), a simple
 
 `docker run -p 127.0.53.53:53:53/udp emeraldonion/docker-dnsproxy` and set 127.0.53.53 as your DNS nameserver.
 
-### Upstream selection
+### Configuration
 
-Set the `DNSPROXY_UPSTREAM` environment variable to your preferred upstream server. For example to use Emerald Onion's DoQ server:
-`docker run -p 127.0.53.53:53:53/udp -e 'DNSPROXY_UPSTREAM=quic://dns.emeraldonion.org:8853' emeraldonion/docker-dnsproxy`
+| Environment variable | Usage                                                                         | Default                      |
+|----------------------|-------------------------------------------------------------------------------|------------------------------|
+| DNSPROXY_UPSTREAM    | DNS server to proxy requests to                                               | https://dns.emeraldonion.org |
+| DNSPROXY_BOOTSTRAP   | Plain DNS server to use for bootstrapping the hostname of the upstream server | 1.1.1.1                      |
+
+
+For example to use Emerald Onion's DoQ server and Quad9 boostrap DNS:
+
+`docker run -p 127.0.53.53:53:53/udp -e 'DNSPROXY_UPSTREAM=quic://dns.emeraldonion.org:8853' -e 'DNSPROXY_BOOTSTRAP=9.9.9.9' emeraldonion/docker-dnsproxy`
